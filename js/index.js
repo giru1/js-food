@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const tabs = document.querySelectorAll('.tabheader__item')
-	const tabsContent = document.querySelectorAll('.tabcontent')
-	const tabsParent = document.querySelector('.tabheader__items')
+	const tabs = document.querySelectorAll('.tabheader__item');
+	const tabsContent = document.querySelectorAll('.tabcontent');
+	const tabsParent = document.querySelector('.tabheader__items');
 	
 	function hideTabContent() {
 		tabsContent.forEach(tab => {
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		tabs.forEach(tab => {
 			tab.classList.remove('tabheader__item_active');
-		})
+		});
 	}
 	
 	function showTabContent(i = 0) {
@@ -20,22 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		tabs[i].classList.add('tabheader__item_active');
 	}
 	
-	hideTabContent()
-	showTabContent()
+	hideTabContent();
+	showTabContent();
 	
 	tabsParent.addEventListener('click', (event) => {
-		const target = event.target
+		const target = event.target;
 		
 		if (target && target.classList.contains('tabheader__item')) {
 			tabs.forEach((tab, i) => {
 				if (target == tab) {
-					hideTabContent()
-					showTabContent(i)
+					hideTabContent();
+					showTabContent(i);
 				}
-			})
+			});
 		}
 		
-	})
+	});
 	
 	
 	const deadLine = '2022-05-11';
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			days = Math.floor(t / (1000*60*60*24)),
 			hours = Math.floor(t / (1000*60*60) % 24),
 			minutes = Math.floor((t / 1000 / 60) % 60),
-			seconds = Math.floor((t / 1000) % 60)
+			seconds = Math.floor((t / 1000) % 60);
 		
 		return {
 			'total': t,
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			'hours': hours,
 			'minutes': minutes,
 			'seconds': seconds,
-		}
+		};
 	}
 	
 	function getZero(num) {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		updateClock();
 		
 		function updateClock() {
-			const t = getTimeRemaining(endtime)
+			const t = getTimeRemaining(endtime);
 			
 			days.innerHTML = getZero(t.days);
 			hours.innerHTML = getZero(t.hours);
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			seconds.innerHTML = getZero(t.seconds);
 			
 			if (t.total <= 0) {
-				clearInterval(timeInterval)
+				clearInterval(timeInterval);
 			}
 		}
 	}
@@ -99,11 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		modal.classList.remove('hide');
 		// modal.classList.toggle('hide');
 		document.body.overflow = 'hidden';
-		clearInterval(modalTimerId)
+		clearInterval(modalTimerId);
 	}
 	
 	modalTrigger.forEach(btn => {
-		btn.addEventListener('click', openModal)
+		btn.addEventListener('click', openModal);
 	});
 	
 	function closeModal() {
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
-	const modalTimerId = setTimeout(openModal, 3000);
+	const modalTimerId = setTimeout(openModal, 30000);
 	
 	function showModalByScroll() {
 		if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
@@ -137,6 +137,66 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	
 	window.addEventListener('scroll', showModalByScroll);
+
+	class MenuCard {
+		constructor(src, alt, title, desc, price, parentSelector) {
+			this.src      = src;
+			this.alt      = alt;
+			this.title    = title;
+			this.desc     = desc;
+			this.price    = price;
+			this.parent    = document.querySelector(parentSelector);
+			this.transfer = 81;
+			this.changeToUAH();
+		}
+
+		changeToUAH(){
+			this.price = this.price * this.transfer;
+		}
+
+		render() {
+			const element = document.createElement('div');
+			element.innerHTML = `
+			<div class="menu__item">
+				<img src="${this.src}" alt="${this.alt}">
+				<h3 class="menu__item-subtitle">${this.title}</h3>
+				<div class="menu__item-descr">${this.desc}</div>
+				<div class="menu__item-divider"></div>
+				<div class="menu__item-price">
+					<div class="menu__item-cost">Цена:</div>
+					<div class="menu__item-total"><span>${this.price}</span> руб/день</div>
+				</div>
+			</div>`;
+			this.parent.append(element);
+		}
+	}
+
+	new MenuCard(
+		'img/tabs/vegy.jpg',
+		'vegy',
+		'Меню "Фитнес"',
+		'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+		2,
+		'.menu .container'
+	).render();
+
+	new MenuCard(
+		'img/tabs/vegy.jpg',
+		'vegy',
+		'Меню "Фитнес"',
+		'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+		2,
+		'.menu .container'
+	).render();
+
+	new MenuCard(
+		'img/tabs/vegy.jpg',
+		'vegy',
+		'Меню "Фитнес"',
+		'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+		2,
+		'.menu .container'
+	).render();
 	
 });
 
